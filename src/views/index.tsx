@@ -11,6 +11,7 @@ import Login from "./Login";
 import Home from "./Home";
 import Chat from "./Chat";
 import Profile from "./Profile";
+import SignUp from "./SignUp";
 
 // Array of arrays in format "Name", ComponentIcon, "/route"
 export const menuList = [
@@ -27,4 +28,5 @@ export const routes: Array<RouteType> = [
   { path: "/home", component: Home },
   { path: "/chat", component: Chat },
   { path: "/profile", component: Profile },
+  { path: "/signup", component: SignUp },
 ];
