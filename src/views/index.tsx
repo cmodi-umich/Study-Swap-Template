@@ -9,7 +9,7 @@ import {
 // View Component Imports
 import Login from "./Login";
 import Home from "./Home";
-import Chat from "./Chat";
+import Chats from "./Chats";
 import Profile from "./Profile";
 import SignUp from "./SignUp";
 
@@ -26,7 +26,7 @@ interface RouteType {
 export const routes: Array<RouteType> = [
   { path: "/login", component: Login },
   { path: "/home", component: Home },
-  { path: "/chat", component: Chat },
+  { path: "/chats", component: Chats },
   { path: "/profile", component: Profile },
   { path: "/signup", component: SignUp },
 ];
