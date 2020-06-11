@@ -63,7 +63,7 @@ const AppToolbar = ({ classes, title, toggleDrawer }: AppToolbarProps) => (
         />
       </div>
       <IconButton color='inherit'>
-        <Badge badgeContent={4} color='error'>
+        <Badge badgeContent={5} color='error'>
           <NotificationIcon />
         </Badge>
       </IconButton>
