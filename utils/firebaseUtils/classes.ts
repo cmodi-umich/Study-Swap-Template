@@ -21,7 +21,7 @@ function getClassList(userId: string): Promise<string[] | void> {
 /*
   @type     GET -> Classes
   @desc     get all classes for a classId array
-  */
+*/
 async function getClasses(classes: Array<string>): Promise<any> {
   // TODO Later: Fix 'any' in return...
   return Promise.all(
@@ -47,7 +47,7 @@ async function getClasses(classes: Array<string>): Promise<any> {
 /*
   @type     POST -> Classes
   @desc     add new classes to user
-  */
+*/
 function addClasses(userId: string, newClasses: Array<string>): void {
   // newClasses are not in current classes manage with FE
   const ref = db.collection(collections.users).doc(userId);
@@ -63,7 +63,7 @@ function addClasses(userId: string, newClasses: Array<string>): void {
 /*
   @type     POST -> Classes
   @desc     removes classes from user
-  */
+*/
 function removeClasses(userId: string, oldClasses: Array<string>): void {
   // oldClasses are in current classes manage with FE
   const ref = db.collection(collections.users).doc(userId);
@@ -80,7 +80,7 @@ function removeClasses(userId: string, oldClasses: Array<string>): void {
   @type     POST -> Classes
   @desc     create new class to join
   @access   Only should be accessable by admins
-  */
+*/
 function createClass(newClass: classModel): void {
   db.collection(collections.classes)
     .add(newClass)

@@ -40,7 +40,7 @@ function getPosts(classId: string): Promise<postModel[] | void> {
 /*
   @type     GET -> Posts
   @desc     get all posts made by a certain user
-  */
+*/
 function getUserPosts(userId: string): Promise<postModel[] | void> {
   return db
     .collection(collections.posts)
@@ -71,7 +71,7 @@ function getUserPosts(userId: string): Promise<postModel[] | void> {
 /*
   @type     GET -> Posts
   @desc     get all posts for a certain userId
-  */
+*/
 function getFeed(userId: string): Promise<any> {
   // TODO Later: Fix 'any' in return...
   return db
@@ -96,7 +96,7 @@ function getFeed(userId: string): Promise<any> {
 /*
   @type     POST -> Posts
   @desc     add a new post into a class
-  */
+*/
 function addPost(userId: string, classId: string, post: postModel): void {
   db.collection(collections.posts)
     .add({
@@ -109,7 +109,7 @@ function addPost(userId: string, classId: string, post: postModel): void {
 /*
   @type     DELETE -> Posts
   @desc     remove an old post from a class
-  */
+*/
 function removePost(postId: string): void {
   db.collection(collections.posts)
     .doc(postId)
@@ -121,7 +121,7 @@ function removePost(postId: string): void {
 /*
   @type     PATCH -> Posts
   @desc     edit a post with newText
-  */
+*/
 function editPost(postId: string, newText: string): void {
   db.collection(collections.posts)
     .doc(postId)

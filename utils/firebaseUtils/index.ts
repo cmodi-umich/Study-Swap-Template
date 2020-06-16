@@ -25,6 +25,14 @@ import {
 
 import { getNotifications, readNotification } from "./notifications";
 
+import {
+  getMessages,
+  addMessages,
+  getChats,
+  addChats,
+  addMember,
+} from "./chats";
+
 /********** EXPORT **********/
 export {
   getPosts,
@@ -44,4 +52,9 @@ export {
   editComment,
   getNotifications,
   readNotification,
+  getMessages,
+  addMessages,
+  getChats,
+  addChats,
+  addMember,
 };

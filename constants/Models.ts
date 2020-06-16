@@ -6,6 +6,7 @@ interface userModel {
   grade: number | string;
   bio: string;
   classes: Array<string>;
+  chats: Array<string>;
 }
 
 interface classModel {
@@ -56,4 +57,35 @@ interface notificationModel {
   read: boolean;
 }
 
-export { userModel, classModel, postModel, commentModel, notificationModel };
+interface chatsModel {
+  id?: string;
+
+  //foreign key relations
+  members: Array<string>; // array of userIds of members
+
+  // chats specific
+  messages: Array<string>; // array of messageIds
+}
+
+interface messageModel {
+  id?: string;
+
+  //foreign key relations
+  chatId: string; // points to the chat containing the message
+
+  // message specific
+  messageText: string;
+  senderId: string;
+  senderName: string;
+  timestamp?: string;
+}
+
+export {
+  userModel,
+  classModel,
+  postModel,
+  commentModel,
+  notificationModel,
+  chatsModel,
+  messageModel,
+};
