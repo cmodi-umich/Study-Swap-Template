@@ -12,9 +12,11 @@ function getClassList(userId: string): Promise<string[] | void> {
     .collection(collections.users)
     .doc(userId)
     .get()
-    .then((user) => {
-      return user.data().classes;
-    })
+    .then(
+      (user: any): Array<string> => {
+        return user.data().classes;
+      }
+    )
     .catch((err) => console.log(err));
 }
 
@@ -30,7 +32,7 @@ async function getClasses(classes: Array<string>): Promise<any> {
         .doc(id)
         .get()
         .then(
-          (class_): classModel => {
+          (class_: any): classModel => {
             const data = class_.data();
             return {
               id: class_.id,
@@ -49,9 +51,9 @@ async function getClasses(classes: Array<string>): Promise<any> {
   @desc     add new classes to user
 */
 function addClasses(userId: string, newClasses: Array<string>): void {
-  // newClasses are not in current classes manage with FE
+  // newClasses are not in current classes - managed with FE
   const ref = db.collection(collections.users).doc(userId);
-  newClasses.forEach((class_) => {
+  newClasses.forEach((class_: string): void => {
     ref
       .update({
         classes: firebaseApp.firestore.FieldValue.arrayUnion(class_),
@@ -67,7 +69,7 @@ function addClasses(userId: string, newClasses: Array<string>): void {
 function removeClasses(userId: string, oldClasses: Array<string>): void {
   // oldClasses are in current classes manage with FE
   const ref = db.collection(collections.users).doc(userId);
-  oldClasses.forEach((class_) => {
+  oldClasses.forEach((class_: string): void => {
     ref
       .update({
         classes: firebaseApp.firestore.FieldValue.arrayRemove(class_),

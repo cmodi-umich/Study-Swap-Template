@@ -16,20 +16,22 @@ function getComments(postId: string): Promise<commentModel[] | void> {
     .where("postId", "==", postId)
     .orderBy("timestamp", "desc")
     .get()
-    .then((snapshot) => {
-      const comments: Array<commentModel> = [];
-      snapshot.forEach((comment) => {
-        const data = comment.data();
-        comments.push({
-          id: comment.id,
-          userId: data.userId,
-          postId: data.postId,
-          commenterName: data.commenterName,
-          commentText: data.commentText,
+    .then(
+      (snapshot: any): Array<commentModel> => {
+        const comments: Array<commentModel> = [];
+        snapshot.forEach((comment) => {
+          const data = comment.data();
+          comments.push({
+            id: comment.id,
+            userId: data.userId,
+            postId: data.postId,
+            commenterName: data.commenterName,
+            commentText: data.commentText,
+          });
         });
-      });
-      return comments;
-    })
+        return comments;
+      }
+    )
     .catch((err) => console.log(err));
 }
 

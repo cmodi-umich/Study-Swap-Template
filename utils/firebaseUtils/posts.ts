@@ -16,22 +16,24 @@ function getPosts(classId: string): Promise<postModel[] | void> {
     .where("classId", "==", classId)
     .orderBy("timestamp", "asc")
     .get()
-    .then((snapShot) => {
-      const posts: Array<postModel> = [];
-      snapShot.forEach((post) => {
-        const data = post.data();
-        posts.push({
-          userId: data.userId,
-          classId: data.classId,
-          postText: data.postText,
-          postUserName: data.postUserName,
-          postClassName: data.postClassName,
-          id: post.id,
-          edited: false,
+    .then(
+      (snapShot: any): Array<postModel> => {
+        const posts: Array<postModel> = [];
+        snapShot.forEach((post: any): void => {
+          const data = post.data();
+          posts.push({
+            userId: data.userId,
+            classId: data.classId,
+            postText: data.postText,
+            postUserName: data.postUserName,
+            postClassName: data.postClassName,
+            id: post.id,
+            edited: false,
+          });
         });
-      });
-      return posts;
-    })
+        return posts;
+      }
+    )
     .catch((err) => {
       console.error(err); // will be changed to redirect to error screen
     });
@@ -47,22 +49,24 @@ function getUserPosts(userId: string): Promise<postModel[] | void> {
     .where("userId", "==", userId)
     .orderBy("timestamp", "asc")
     .get()
-    .then((snapShot) => {
-      const posts: Array<postModel> = [];
-      snapShot.forEach((post) => {
-        const data = post.data();
-        posts.push({
-          userId: data.userId,
-          classId: data.classId,
-          postText: data.postText,
-          postUserName: data.postUserName,
-          postClassName: data.postClassName,
-          id: post.id,
-          edited: false,
+    .then(
+      (snapShot: any): Array<postModel> => {
+        const posts: Array<postModel> = [];
+        snapShot.forEach((post: any): void => {
+          const data = post.data();
+          posts.push({
+            userId: data.userId,
+            classId: data.classId,
+            postText: data.postText,
+            postUserName: data.postUserName,
+            postClassName: data.postClassName,
+            id: post.id,
+            edited: false,
+          });
         });
-      });
-      return posts;
-    })
+        return posts;
+      }
+    )
     .catch((err) => {
       console.error(err); // will be changed to redirect to error screen
     });
@@ -78,16 +82,20 @@ function getFeed(userId: string): Promise<any> {
     .collection(collections.users)
     .doc(userId)
     .get()
-    .then((user) => {
-      const classes: Array<string> = user.data().classes;
-      let posts: Array<postModel[] | void> = [];
-      classes.forEach(async (class_: string) => {
-        // For each class concat all of the posts
-        const postBlob = getPosts(class_);
-        posts = posts.concat(await postBlob);
-      });
-      return posts;
-    })
+    .then(
+      (user: any): Array<postModel[] | void> => {
+        const classes: Array<string> = user.data().classes;
+        let posts: Array<postModel[] | void> = [];
+        classes.forEach(
+          async (class_: string): Promise<void> => {
+            // For each class concat all of the posts
+            const postBlob = getPosts(class_);
+            posts = posts.concat(await postBlob);
+          }
+        );
+        return posts;
+      }
+    )
     .catch((err) => {
       console.error(err); // will be changed to redirect to error screen
     });
@@ -116,6 +124,16 @@ function removePost(postId: string): void {
     .delete()
     .catch((err) => console.log(err));
   // TODO: add deletion to all comment subcollections/comments in collection
+  db.collection(collections.comments)
+    .where("postId", "==", postId)
+    .get()
+    .then((res: any): void => {
+      let batch = db.batch();
+      res.forEach((doc: any): void => {
+        batch.delete(doc.ref);
+      });
+      batch.commit();
+    });
 }
 
 /*

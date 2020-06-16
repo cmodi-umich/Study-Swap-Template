@@ -26,11 +26,12 @@ import {
 import { getNotifications, readNotification } from "./notifications";
 
 import {
-  getMessages,
+  watchMessages,
   addMessages,
   getChats,
   addChats,
   addMember,
+  leaveChat,
 } from "./chats";
 
 /********** EXPORT **********/
@@ -52,9 +53,10 @@ export {
   editComment,
   getNotifications,
   readNotification,
-  getMessages,
+  watchMessages,
   addMessages,
   getChats,
   addChats,
   addMember,
+  leaveChat,
 };
