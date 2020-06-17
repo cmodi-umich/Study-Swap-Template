@@ -32,7 +32,9 @@ function getComments(postId: string): Promise<commentModel[] | void> {
         return comments;
       }
     )
-    .catch((err) => console.log(err));
+    .catch((err: any): void => {
+      console.error(err); // will be changed to redirect to error screen
+    });
 }
 
 /*
@@ -45,7 +47,9 @@ function addComment(comment: commentModel): void {
       timestamp: firebaseApp.firestore.FieldValue.serverTimestamp(),
       ...comment,
     })
-    .catch((err) => console.log(err));
+    .catch((err: any): void => {
+      console.error(err); // will be changed to redirect to error screen
+    });
 }
 
 /*
@@ -56,7 +60,9 @@ function deleteComment(commentId: string): void {
   db.collection(collections.comments)
     .doc(commentId)
     .delete()
-    .catch((err) => console.log(err));
+    .catch((err: any): void => {
+      console.error(err); // will be changed to redirect to error screen
+    });
 }
 
 /*
@@ -67,7 +73,9 @@ function editComment(commentId: string, newText: string): void {
   db.collection(collections.comments)
     .doc(commentId)
     .update({ commentText: newText })
-    .catch((err) => console.log(err));
+    .catch((err: any): void => {
+      console.error(err); // will be changed to redirect to error screen
+    });
 }
 
 export { getComments, addComment, deleteComment, editComment };

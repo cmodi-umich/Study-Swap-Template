@@ -34,7 +34,7 @@ function getPosts(classId: string): Promise<postModel[] | void> {
         return posts;
       }
     )
-    .catch((err) => {
+    .catch((err: any): void => {
       console.error(err); // will be changed to redirect to error screen
     });
 }
@@ -67,7 +67,7 @@ function getUserPosts(userId: string): Promise<postModel[] | void> {
         return posts;
       }
     )
-    .catch((err) => {
+    .catch((err: any): void => {
       console.error(err); // will be changed to redirect to error screen
     });
 }
@@ -96,7 +96,7 @@ function getFeed(userId: string): Promise<any> {
         return posts;
       }
     )
-    .catch((err) => {
+    .catch((err: any): void => {
       console.error(err); // will be changed to redirect to error screen
     });
 }
@@ -111,7 +111,9 @@ function addPost(userId: string, classId: string, post: postModel): void {
       timestamp: firebaseApp.firestore.FieldValue.serverTimestamp(),
       ...post,
     })
-    .catch((err) => console.log(err));
+    .catch((err: any): void => {
+      console.error(err); // will be changed to redirect to error screen
+    });
 }
 
 /*
@@ -122,8 +124,9 @@ function removePost(postId: string): void {
   db.collection(collections.posts)
     .doc(postId)
     .delete()
-    .catch((err) => console.log(err));
-  // TODO: add deletion to all comment subcollections/comments in collection
+    .catch((err: any): void => {
+      console.error(err); // will be changed to redirect to error screen
+    });
   db.collection(collections.comments)
     .where("postId", "==", postId)
     .get()
@@ -132,7 +135,12 @@ function removePost(postId: string): void {
       res.forEach((doc: any): void => {
         batch.delete(doc.ref);
       });
-      batch.commit();
+      batch.commit().catch((err: any): void => {
+        console.error(err); // will be changed to redirect to error screen
+      });
+    })
+    .catch((err: any): void => {
+      console.error(err); // will be changed to redirect to error screen
     });
 }
 
@@ -144,7 +152,9 @@ function editPost(postId: string, newText: string): void {
   db.collection(collections.posts)
     .doc(postId)
     .update({ postText: newText })
-    .catch((err) => console.log(err));
+    .catch((err: any): void => {
+      console.error(err); // will be changed to redirect to error screen
+    });
 }
 
 export { getPosts, getUserPosts, getFeed, addPost, removePost, editPost };

@@ -90,12 +90,21 @@ function addChats(userId: string, recepientId: string): any {
         .doc(userId)
         .update({
           chats: firebaseApp.firestore.FieldValue.arrayUnion(chat.id),
+        })
+        .catch((err: any): void => {
+          console.error(err); // will be changed to redirect to error screen
         });
       db.collection(collections.users)
         .doc(recepientId)
         .update({
           chats: firebaseApp.firestore.FieldValue.arrayUnion(chat.id),
+        })
+        .catch((err: any): void => {
+          console.error(err); // will be changed to redirect to error screen
         });
+    })
+    .catch((err: any): void => {
+      console.error(err); // will be changed to redirect to error screen
     });
 }
 
@@ -107,15 +116,27 @@ function addMember(memberId: string, chatId: string): any {
   //TODO Fix any return....
   const ref = db.collection(collections.chats).doc(chatId);
   // Add memberId to member array
-  ref.update({
-    members: firebaseApp.firestore.FieldValue.arrayUnion(memberId),
-  });
+  ref
+    .update({
+      members: firebaseApp.firestore.FieldValue.arrayUnion(memberId),
+    })
+    .catch((err: any): void => {
+      console.error(err); // will be changed to redirect to error screen
+    });
   // Add chatId to new members chats array
-  ref.get().then((chat: any): void => {
-    db.collection(collections.users)
-      .doc(memberId)
-      .update({ chats: firebaseApp.firestore.FieldValue.arrayUnion(chat.id) });
-  });
+  ref
+    .get()
+    .then((chat: any): void => {
+      db.collection(collections.users)
+        .doc(memberId)
+        .update({ chats: firebaseApp.firestore.FieldValue.arrayUnion(chat.id) })
+        .catch((err: any): void => {
+          console.error(err); // will be changed to redirect to error screen
+        });
+    })
+    .catch((err: any): void => {
+      console.error(err); // will be changed to redirect to error screen
+    });
 }
 
 /*
@@ -126,15 +147,29 @@ function leaveChat(memberId: string, chatId: string): any {
   //TODO Fix any return....
   const ref = db.collection(collections.chats).doc(chatId);
   // Delete memberId from member array
-  ref.update({
-    members: firebaseApp.firestore.FieldValue.arrayRemove(memberId),
-  });
+  ref
+    .update({
+      members: firebaseApp.firestore.FieldValue.arrayRemove(memberId),
+    })
+    .catch((err: any): void => {
+      console.error(err); // will be changed to redirect to error screen
+    });
   // Remove chatId from old members chats array
-  ref.get().then((chat: any): void => {
-    db.collection(collections.users)
-      .doc(memberId)
-      .update({ chats: firebaseApp.firestore.FieldValue.arrayRemove(chat.id) });
-  });
+  ref
+    .get()
+    .then((chat: any): void => {
+      db.collection(collections.users)
+        .doc(memberId)
+        .update({
+          chats: firebaseApp.firestore.FieldValue.arrayRemove(chat.id),
+        })
+        .catch((err: any): void => {
+          console.error(err); // will be changed to redirect to error screen
+        });
+    })
+    .catch((err: any): void => {
+      console.error(err); // will be changed to redirect to error screen
+    });
 }
 
 export { watchMessages, addMessages, getChats, addChats, addMember, leaveChat };

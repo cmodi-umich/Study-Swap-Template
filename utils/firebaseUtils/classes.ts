@@ -17,7 +17,9 @@ function getClassList(userId: string): Promise<string[] | void> {
         return user.data().classes;
       }
     )
-    .catch((err) => console.log(err));
+    .catch((err: any): void => {
+      console.error(err); // will be changed to redirect to error screen
+    });
 }
 
 /*
@@ -41,7 +43,9 @@ async function getClasses(classes: Array<string>): Promise<any> {
             };
           }
         )
-        .catch((err) => console.log(err));
+        .catch((err: any): void => {
+          console.error(err); // will be changed to redirect to error screen
+        });
     })
   );
 }
@@ -58,7 +62,9 @@ function addClasses(userId: string, newClasses: Array<string>): void {
       .update({
         classes: firebaseApp.firestore.FieldValue.arrayUnion(class_),
       })
-      .catch((err) => console.log(err));
+      .catch((err: any): void => {
+        console.error(err); // will be changed to redirect to error screen
+      });
   });
 }
 
@@ -74,7 +80,9 @@ function removeClasses(userId: string, oldClasses: Array<string>): void {
       .update({
         classes: firebaseApp.firestore.FieldValue.arrayRemove(class_),
       })
-      .catch((err) => console.log(err));
+      .catch((err: any): void => {
+        console.error(err); // will be changed to redirect to error screen
+      });
   });
 }
 
@@ -86,7 +94,9 @@ function removeClasses(userId: string, oldClasses: Array<string>): void {
 function createClass(newClass: classModel): void {
   db.collection(collections.classes)
     .add(newClass)
-    .catch((err) => console.log(err));
+    .catch((err: any): void => {
+      console.error(err); // will be changed to redirect to error screen
+    });
 }
 
 export { getClassList, getClasses, addClasses, removeClasses, createClass };
