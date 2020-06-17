@@ -3,7 +3,7 @@ interface userModel {
   firstName: string;
   lastName: string;
   email: string;
-  grade: number | string;
+  grade: string;
   bio: string;
   classes: Array<string>;
   chats: Array<string>;
